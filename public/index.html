@@ -1,3 +1,54 @@
-   <!doctype html>
-   <html><head><meta charset="utf-8"><title>CIO Sandbox</title></head>
-   <body><h1>CIO Sandbox Site</h1></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meridian Health | Care that fits your life</title>
+<link rel="stylesheet" href="style.css">
+<script src="cio.js"></script>
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">Meridian Health</a>
+  <nav><a href="index.html">Home</a><a href="plans.html">Plans</a><a href="book.html">Book a visit</a></nav>
+</header>
+<main>
+  <section class="hero">
+    <h1>Care that fits your life</h1>
+    <p>A membership for virtual primary care, mental health, and nutrition. Start free for 14 days.</p>
+  </section>
+  <section class="card">
+    <h2 style="text-align:center;margin:0">Start your free trial</h2>
+    <form id="signup">
+      <div><label for="first_name">First name</label><input id="first_name" required></div>
+      <div><label for="email">Email</label><input id="email" type="email" required></div>
+      <div><label for="goal">Main health goal</label>
+        <select id="goal">
+          <option>Primary care</option><option>Mental health</option>
+          <option>Nutrition</option><option>Sleep</option><option>Weight management</option>
+        </select></div>
+      <button type="submit">Start free trial</button>
+    </form>
+    <div class="msg" id="msg">Welcome! Check your inbox. Next, <a href="plans.html">pick a plan</a>.</div>
+  </section>
+</main>
+<footer>Meridian Health is a fictional demo site for Customer.io testing.</footer>
+<script>
+document.getElementById("signup").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var email = document.getElementById("email").value.trim().toLowerCase();
+  var goal = document.getElementById("goal").value;
+  identifyUser({
+    email: email,
+    first_name: document.getElementById("first_name").value.trim(),
+    health_goal: goal,
+    plan: "trial",
+    trial_started_at: Math.floor(Date.now() / 1000)
+  });
+  trackEvent("signed_up", { health_goal: goal, source: "website" });
+  e.target.style.display = "none";
+  document.getElementById("msg").style.display = "block";
+});
+</script>
+</body>
+</html>

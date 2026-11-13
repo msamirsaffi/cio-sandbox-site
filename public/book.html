@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Book a visit | Meridian Health</title>
+<link rel="stylesheet" href="style.css">
+<script src="cio.js"></script>
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">Meridian Health</a>
+  <nav><a href="index.html">Home</a><a href="plans.html">Plans</a><a href="book.html">Book a visit</a></nav>
+</header>
+<main>
+  <section class="hero"><h1>Book a virtual visit</h1><p>Most visits happen within 48 hours.</p></section>
+  <section class="card">
+    <form id="book">
+      <div><label for="specialty">Visit type</label>
+        <select id="specialty">
+          <option>Primary care</option><option>Mental health</option>
+          <option>Nutrition</option><option>Sleep</option>
+        </select></div>
+      <div><label for="date">Preferred date</label><input id="date" type="date" required></div>
+      <button type="submit">Book visit</button>
+    </form>
+    <div class="msg" id="msg">Visit requested. You will get a confirmation shortly.</div>
+  </section>
+  <p style="text-align:center;margin-top:24px"><button id="cancel" style="background:#8a3b3b">Cancel my membership (demo)</button></p>
+</main>
+<footer>Meridian Health is a fictional demo site for Customer.io testing.</footer>
+<script>
+var user = getUser();
+if (!user || !user.email) window.location.href = "index.html";
+
+document.getElementById("book").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var specialty = document.getElementById("specialty").value;
+  var date = document.getElementById("date").value;
+  trackEvent("appointment_booked", { specialty: specialty, appointment_date: date });
+  identifyUser({ email: user.email, last_appointment_type: specialty, has_booked_visit: true });
+  e.target.style.display = "none";
+  document.getElementById("msg").style.display = "block";
+});
+
+document.getElementById("cancel").addEventListener("click", function () {
+  trackEvent("membership_cancelled", { plan: user.plan || "unknown" });
+  identifyUser({ email: user.email, plan: "cancelled" });
+  alert("Cancellation recorded (demo).");
+});
+</script>
+</body>
+</html>

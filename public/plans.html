@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plans | Meridian Health</title>
+<link rel="stylesheet" href="style.css">
+<script src="cio.js"></script>
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">Meridian Health</a>
+  <nav><a href="index.html">Home</a><a href="plans.html">Plans</a><a href="book.html">Book a visit</a></nav>
+</header>
+<main>
+  <section class="hero"><h1>Choose your plan</h1><p>Switch or cancel any time.</p></section>
+  <div class="grid">
+    <div class="card"><h3>Essential</h3><div class="price">$29<small>/mo</small></div>
+      <ul class="feat"><li>Unlimited messaging</li><li>2 virtual visits / month</li></ul>
+      <button data-plan="essential" data-price="29">Select Essential</button></div>
+    <div class="card"><h3>Plus</h3><div class="price">$59<small>/mo</small></div>
+      <ul class="feat"><li>Everything in Essential</li><li>Mental health sessions</li><li>Nutrition coaching</li></ul>
+      <button data-plan="plus" data-price="59">Select Plus</button></div>
+    <div class="card"><h3>Family</h3><div class="price">$99<small>/mo</small></div>
+      <ul class="feat"><li>Up to 5 members</li><li>Unlimited visits</li><li>Priority scheduling</li></ul>
+      <button data-plan="family" data-price="99">Select Family</button></div>
+  </div>
+  <div class="msg" id="msg"></div>
+</main>
+<footer>Meridian Health is a fictional demo site for Customer.io testing.</footer>
+<script>
+document.querySelectorAll("button[data-plan]").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var u = getUser();
+    if (!u || !u.email) { window.location.href = "index.html"; return; }
+    var plan = btn.dataset.plan, price = Number(btn.dataset.price);
+    identifyUser({ email: u.email, plan: plan, plan_price: price });
+    trackEvent("plan_selected", { plan: plan, price: price });
+    var m = document.getElementById("msg");
+    m.textContent = "You selected " + plan + ". Now book your first visit.";
+    m.style.display = "block";
+  });
+});
+</script>
+</body>
+</html>
